@@ -28,6 +28,7 @@ export default class GameplayScene extends Phaser.Scene {
     this.ball = new Ball(this, this.game.scale.width / 2, this.game.scale.height / 2, 'ball');
     this.bot = new Bot(this, this.game.scale.width - 100, this.game.scale.height / 2, 'paddle', this.ball);
     this.ball.setVelocityX(-this.ball.speed);
+    this.ball.setVelocityY((Math.random() * 2 - 1) * this.ball.maxSpeedY);
     this.physics.add.collider(this.player, this.ball, this.collideBallPlayer as ArcadePhysicsCallback, undefined, this);
     this.physics.add.collider(this.bot, this.ball, this.collideBallPlayer as ArcadePhysicsCallback, undefined, this);
   }
