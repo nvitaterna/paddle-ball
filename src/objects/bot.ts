@@ -11,7 +11,7 @@ export default class Bot extends Paddle {
   }
 
   newOffset() {
-    const offset = (this.height / 2) * Math.random();
+    const offset = (this.height / 2) * (Math.random() * 0.75 + 0.25);
     this.offset = offset * (Math.random() > 0.5 ? 1 : -1);
   }
 

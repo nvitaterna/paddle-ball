@@ -1,9 +1,9 @@
 import * as Phaser from 'phaser';
 
 export default class Ball extends Phaser.Physics.Arcade.Sprite {
-  public speed = 300;
+  public speed = 500;
 
-  public maxSpeedY = 100;
+  public maxSpeedY = 200;
 
   public speedIncrement = 20;
 
