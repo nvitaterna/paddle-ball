@@ -38,6 +38,9 @@ export default class GameplayScene extends Phaser.Scene {
   }
 
   collideBallPlayer(paddle: Player | Bot, ball: Ball) {
+    if (paddle instanceof Bot) {
+      paddle.newOffset();
+    }
     ball.speed += ball.speedIncrement;
     ball.maxSpeedY += ball.speedIncrement;
     ball.setVelocityY(this.getYVelocity(paddle.getCenter().y, ball.getCenter().y));
