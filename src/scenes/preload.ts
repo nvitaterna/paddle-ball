@@ -15,20 +15,7 @@ export default class PreloadScene extends Phaser.Scene {
     this.load.image('ball', ballSprite);
     this.load.image('paddle', paddleSprite);
     this.load.image('line', lineSprite);
-
-    // this.load.on('progress', this.onLoadProgress, this);
-    // this.load.on('filecomplete', this.onLoadFile, this);
   }
-
-  // eslint-disable-next-line class-methods-use-this
-  // onLoadFile(a: string, b: string, c: Phaser.Textures.Texture) {
-
-  // }
-
-  // eslint-disable-next-line class-methods-use-this
-  // onLoadProgress(progress: number) {
-  //   console.log(`${Math.round(progress * 100)}%`);
-  // }
 
   create() {
     this.cursors = this.input.keyboard.createCursorKeys();

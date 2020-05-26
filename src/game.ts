@@ -1,3 +1,4 @@
+// eslint-disable-next-line import/extensions
 import * as Phaser from 'phaser';
 import GameplayScene from '@/scenes/gameplay';
 import PreloadScene from '@/scenes/preload';
