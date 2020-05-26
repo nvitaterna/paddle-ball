@@ -3,12 +3,15 @@ const webpack = require('webpack');
 // const CopyWebpackPlugin = require('copy-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const HtmlWebpackHarddiskPlugin = require('html-webpack-harddisk-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
-let mode;
+let mode = 'development';
 
 if (process.env.NODE_ENV) {
   mode = process.env.NODE_ENV;
 }
+
+const devMode = mode === 'development';
 
 const config = {
   mode,
@@ -35,7 +38,30 @@ const config = {
             },
           },
         ],
-
+      },
+      {
+        test: /\.(ttf)$/,
+        use: [
+          {
+            loader: 'file-loader',
+            options: {
+              outputPath: 'fonts',
+              name: '[name].[ext]',
+            },
+          },
+        ],
+      },
+      {
+        test: /\.css$/,
+        use: [
+          {
+            loader: MiniCssExtractPlugin.loader,
+            options: {
+              hmr: process.env.NODE_ENV === 'development',
+            },
+          },
+          'css-loader',
+        ],
       },
     ],
   },
@@ -48,7 +74,6 @@ const config = {
   optimization: {
     splitChunks: {
       chunks: 'all',
-      maxSize: 244000,
     },
   },
   devtool: 'inline-source-map',
@@ -63,6 +88,12 @@ const config = {
     new webpack.DefinePlugin({
       'typeof CANVAS_RENDERER': JSON.stringify(true),
       'typeof WEBGL_RENDERER': JSON.stringify(true),
+    }),
+    new MiniCssExtractPlugin({
+      // Options similar to the same options in webpackOptions.output
+      // both options are optional
+      filename: devMode ? '[name].css' : '[name].[hash].css',
+      chunkFilename: devMode ? '[id].css' : '[id].[hash].css',
     }),
   ],
 };
