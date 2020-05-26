@@ -1,5 +1,6 @@
 import * as Phaser from 'phaser';
-import gameplayScene from '@/scenes/gameplay';
+import GameplayScene from '@/scenes/gameplay';
+import PreloadScene from '@/scenes/preload';
 
 const gameConfig: Phaser.Types.Core.GameConfig = {
   type: Phaser.AUTO,
@@ -11,7 +12,7 @@ const gameConfig: Phaser.Types.Core.GameConfig = {
     width: 1920,
     height: 1080,
   },
-  scene: [gameplayScene],
+  scene: [PreloadScene, GameplayScene],
   physics: {
     default: 'arcade',
     arcade: {

@@ -1,7 +1,3 @@
-import ballSprite from '@/assets/images/ball.png';
-import paddleSprite from '@/assets/images/paddle.png';
-import lineSprite from '@/assets/images/line.png';
-
 import Player from '@/objects/player';
 import Ball from '@/objects/ball';
 import Bot from '@/objects/bot';
@@ -15,12 +11,6 @@ export default class GameplayScene extends Phaser.Scene {
 
   constructor() {
     super('gameplay');
-  }
-
-  preload() {
-    this.load.image('ball', ballSprite);
-    this.load.image('paddle', paddleSprite);
-    this.load.image('line', lineSprite);
   }
 
   create() {
