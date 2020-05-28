@@ -1,4 +1,4 @@
-import Paddle from '@/objects/paddle';
+import Paddle from '@/objects/Paddle';
 
 export default class Player extends Paddle {
   private cursors!: Phaser.Types.Input.Keyboard.CursorKeys;

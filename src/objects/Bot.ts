@@ -1,5 +1,5 @@
-import Paddle from '@/objects/paddle';
-import Ball from './ball';
+import Paddle from '@/objects/Paddle';
+import Ball from './Ball';
 
 export default class Bot extends Paddle {
   offset!: number;
