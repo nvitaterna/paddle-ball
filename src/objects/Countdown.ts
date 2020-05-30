@@ -5,7 +5,7 @@ export default class Countdown extends Phaser.GameObjects.Text {
 
   currentNumber!: number;
 
-  constructor(scene: Phaser.Scene, x: number, y: number, style: Phaser.Types.GameObjects.Text.TextStyle, private callback: Function) {
+  constructor(scene: Phaser.Scene, x: number, y: number, style: Phaser.Types.GameObjects.Text.TextStyle, private callback: Function, private startingNumber = 3) {
     super(scene, x, y, '3', style);
     this.startCountdown();
     this.scene.add.existing(this);
@@ -13,8 +13,8 @@ export default class Countdown extends Phaser.GameObjects.Text {
   }
 
   startCountdown() {
-    this.currentNumber = 3;
-    this.text = '3';
+    this.currentNumber = this.startingNumber;
+    this.text = this.currentNumber.toString();
     this.timer = this.scene.time.addEvent({
       delay: interval,
       callback: this.nextNumber,

@@ -1,5 +1,6 @@
 // eslint-disable-next-line import/extensions
 import * as Phaser from 'phaser';
+import Gameover from '@/scenes/Gameover';
 import Gameplay from '@/scenes/Gameplay';
 import Preload from '@/scenes/Preload';
 
@@ -16,6 +17,7 @@ const gameConfig: Phaser.Types.Core.GameConfig = {
   scene: [
     Preload,
     Gameplay,
+    Gameover,
   ],
   physics: {
     default: 'arcade',

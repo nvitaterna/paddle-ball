@@ -1,2 +1,4 @@
 import '@/assets/css/style.css';
-import '@/game';
+import game from '@/game';
+
+(window as any).game = game;

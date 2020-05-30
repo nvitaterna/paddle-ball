@@ -2,13 +2,15 @@ import Countdown from '@/objects/Countdown';
 import Player from '@/objects/Player';
 import Ball from '@/objects/Ball';
 import Bot from '@/objects/Bot';
-import Line from '@/objects/Line';
 import Score from '@/objects/Score';
+import makeLine from '@/utils/makeLine';
 
 const playerOffset = 150;
 const goalOffset = playerOffset * 0.5;
 
 export default class GameplayScene extends Phaser.Scene {
+  cursors!: Phaser.Types.Input.Keyboard.CursorKeys;
+
   player!: Player;
 
   bot!: Bot;
@@ -25,12 +27,18 @@ export default class GameplayScene extends Phaser.Scene {
 
   countdown!: Countdown;
 
+  winningScore = 3;
+
+  gameOverShown = false;
+
   constructor() {
     super('gameplay');
   }
 
   create() {
-    this.player = new Player(this, playerOffset, this.game.scale.height / 2, 'paddle');
+    this.cursors = this.input.keyboard.createCursorKeys();
+
+    this.player = new Player(this, playerOffset, this.game.scale.height / 2, 'paddle', this.cursors);
 
     this.ball = new Ball(this, this.game.scale.width / 2, this.game.scale.height / 2, 'ball');
 
@@ -43,12 +51,9 @@ export default class GameplayScene extends Phaser.Scene {
     this.physics.world.checkCollision.left = false;
     this.physics.world.checkCollision.right = false;
 
-    // eslint-disable-next-line no-new
-    new Line(this, goalOffset);
-    // eslint-disable-next-line no-new
-    new Line(this, this.game.scale.width - goalOffset);
-    // eslint-disable-next-line no-new
-    new Line(this, this.game.scale.width / 2, 6);
+    makeLine(this, goalOffset);
+    makeLine(this, this.game.scale.width - goalOffset);
+    makeLine(this, this.game.scale.width / 2, 6);
 
     this.playerScore = new Score(this, this.game.scale.width / 4, this.game.scale.height / 24);
     this.botScore = new Score(this, this.game.scale.width - this.game.scale.width / 4, this.game.scale.height / 24);
@@ -62,19 +67,13 @@ export default class GameplayScene extends Phaser.Scene {
   }
 
   update() {
-    if (!this.gameOver) {
-      this.player.update();
-      this.bot.update();
+    this.player.update();
+    this.bot.update();
 
-      if (this.ball.getLeftCenter().x > this.game.scale.width - goalOffset) {
-        this.onScore(true);
-      } else if (this.ball.getRightCenter().x < goalOffset) {
-        this.onScore(false);
-      }
-    } else {
-      this.player.setVelocityY(0);
-      this.bot.setVelocityY(0);
-      this.ball.setVelocity(0, 0);
+    if (this.ball.getLeftCenter().x > this.game.scale.width - goalOffset) {
+      this.onScore(true);
+    } else if (this.ball.getRightCenter().x < goalOffset) {
+      this.onScore(false);
     }
   }
 
@@ -84,20 +83,22 @@ export default class GameplayScene extends Phaser.Scene {
     } else {
       this.botScore.increment();
     }
-    this.ball.setVelocity(0, 0);
     this.ball.reset();
     this.player.reset();
     this.bot.reset();
-    this.countdown.startCountdown();
-  }
 
-  checkScore() {
-    if (this.playerScore.score === 3) {
-      this.gameWon = true;
-      this.gameOver = true;
-    } else if (this.botScore.score === 3) {
-      this.gameWon = false;
-      this.gameOver = true;
+    if (this.playerScore.score === this.winningScore) {
+      this.scene.start('gameover', {
+        won: true,
+        score: `${this.playerScore.score}-${this.botScore.score}`,
+      });
+    } else if (this.botScore.score === this.winningScore) {
+      this.scene.start('gameover', {
+        won: false,
+        score: `${this.botScore.score}-${this.playerScore.score}`,
+      });
+    } else {
+      this.countdown.startCountdown();
     }
   }
 

@@ -1,12 +1,8 @@
 import Paddle from '@/objects/Paddle';
 
 export default class Player extends Paddle {
-  private cursors!: Phaser.Types.Input.Keyboard.CursorKeys;
-
-  constructor(scene: Phaser.Scene, x: number, y: number, key: string) {
+  constructor(scene: Phaser.Scene, x: number, y: number, key: string, private cursors: Phaser.Types.Input.Keyboard.CursorKeys) {
     super(scene, x, y, key);
-
-    this.cursors = this.scene.input.keyboard.createCursorKeys();
   }
 
   update() {

@@ -4,10 +4,13 @@ import Ball from './Ball';
 export default class Bot extends Paddle {
   offset!: number;
 
+  difficulty = 0.8;
+
   constructor(scene: Phaser.Scene, x: number, y: number, key: string,
     private ball: Ball) {
     super(scene, x, y, key);
     this.newOffset();
+    this.speed *= this.difficulty;
   }
 
   newOffset() {
